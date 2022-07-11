@@ -1,17 +1,24 @@
 import axios from 'axios'
 /** lib usada para animar a chamada */
 import ora from 'ora'
+import csvToArray from '../utils/csvToArray';
 
 /**
  * @description Exemplo de envio de mensagem simples
  */
-const sendMessage = async (instanceAPI, phone, message) => {
+const sendMessage = async (instanceAPI, phones, message) => {
+  const spinner = ora('Enviando mensagem para a API').start();
   try {
-    const spinner = ora('Enviando áudio para a API').start();
-    await axios.post(instanceAPI, { phone, message })
+    Promise.all(
+      csvToArray(phones).map((phone) => {
+        axios.post(instanceAPI, { phone, message })
+      })
+    )
+    // await axios.post(instanceAPI, { phone, message })
     spinner.succeed('Mensagem enviada a fila de envios, deve chegar em breve.')
   } catch (e) {
-    spinner.fail('Problemas ao enviar audio.')
+    // console.log(e)
+    spinner.fail('Problemas ao enviar mensagem.')
   }
 }
 
