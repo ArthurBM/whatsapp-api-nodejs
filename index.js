@@ -1,5 +1,6 @@
 
 import { initQuestions } from './prompt/questions'
+import 'dotenv/config';
 
 /**
  * Bem vindo ao exemplos de integração utilizando nodejs.
@@ -11,6 +12,6 @@ import { initQuestions } from './prompt/questions'
  * Então caso não queira utilizado, você pode importar as services e executa-las direto.
  */
 
-const INSTANCE_API = ``
+const INSTANCE_API = process.env.INSTANCE_API
 
 initQuestions(INSTANCE_API)
